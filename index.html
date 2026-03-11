@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helena Siew — Brand & Marketing Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0c0c0c;
+    --white: #f2f0eb;
+    --cream: #e8e5de;
+    --mid: #888880;
+    --border-dark: rgba(242,240,235,0.1);
+    --border-light: rgba(12,12,12,0.12);
+    --sidebar-w: 220px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.6; min-height: 100vh; overflow-x: hidden; }
+
+  /* SIDEBAR */
+  .sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: var(--sidebar-w); background: var(--black); border-right: 1px solid var(--border-dark); display: flex; flex-direction: column; justify-content: space-between; padding: 2rem 1.75rem; z-index: 100; }
+  .sidebar-logo { font-family: 'DM Serif Display', serif; font-size: 1rem; letter-spacing: 0.01em; color: var(--white); text-decoration: none; display: block; margin-bottom: 3rem; cursor: pointer; }
+  .sidebar-logo span { color: var(--mid); }
+  .nav-links { list-style: none; display: flex; flex-direction: column; gap: 0.15rem; }
+  .nav-links li a { display: flex; align-items: center; gap: 0.5rem; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; color: var(--mid); text-decoration: none; padding: 0.5rem 0; transition: color 0.2s; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+  .nav-links li a:hover { color: var(--white); }
+  .nav-links li a.active { color: var(--white); }
+  .nav-links li a .slash { color: var(--mid); font-size: 0.65rem; opacity: 0.5; }
+  .nav-links li a.active .slash { opacity: 1; color: var(--white); }
+  .coming-soon-tag { font-size: 0.52rem; background: rgba(242,240,235,0.08); color: var(--mid); padding: 0.15rem 0.45rem; letter-spacing: 0.1em; text-transform: uppercase; margin-left: auto; }
+  .sidebar-meta { font-size: 0.62rem; color: rgba(242,240,235,0.25); letter-spacing: 0.08em; font-family: 'DM Sans', sans-serif; line-height: 1.8; }
+  .sidebar-availability { display: flex; align-items: center; gap: 0.5rem; font-size: 0.65rem; color: rgba(242,240,235,0.5); margin-bottom: 1.5rem; font-family: 'DM Sans', sans-serif; letter-spacing: 0.05em; }
+  .avail-dot { width: 6px; height: 6px; background: #5eba7d; border-radius: 50%; flex-shrink: 0; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  /* MAIN */
+  .main { margin-left: var(--sidebar-w); min-height: 100vh; }
+  .page { display: none; }
+  .page.active { display: block; animation: fadeIn 0.35s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* HERO */
+  .hero { background: var(--black); min-height: 100vh; display: grid; grid-template-rows: 1fr auto; padding: 3rem 3.5rem; border-bottom: 1px solid var(--border-dark); position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -20%; right: -10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(242,240,235,0.03) 0%, transparent 70%); pointer-events: none; }
+  .hero-content { display: flex; flex-direction: column; justify-content: center; max-width: 760px; }
+  .hero-eyebrow { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); font-weight: 500; margin-bottom: 2.5rem; font-family: 'DM Sans', sans-serif; }
+  .hero-headline { font-family: 'DM Serif Display', serif; font-size: clamp(3rem, 6vw, 5.5rem); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 2.5rem; font-weight: 400; }
+  .hero-headline em { font-style: italic; color: var(--mid); }
+  .hero-slash-line { display: flex; align-items: flex-start; gap: 1.5rem; margin-bottom: 3rem; }
+  .hero-slash { font-family: 'DM Serif Display', serif; font-size: 0.85rem; color: var(--mid); padding-top: 0.2rem; }
+  .hero-bio { font-size: 0.95rem; line-height: 1.85; color: rgba(242,240,235,0.6); max-width: 520px; font-weight: 300; }
+  .hero-cta-row { display: flex; align-items: center; gap: 2rem; }
+  .btn-primary { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--white); color: var(--black); padding: 0.85rem 1.75rem; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; cursor: pointer; border: none; font-family: 'DM Sans', sans-serif; transition: background 0.2s, transform 0.15s; }
+  .btn-primary:hover { background: var(--cream); transform: translateY(-1px); }
+  .btn-ghost { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; color: var(--mid); background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: color 0.2s; }
+  .btn-ghost:hover { color: var(--white); }
+  .hero-bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border-dark); border-top: 1px solid var(--border-dark); margin-top: 4rem; }
+  .hero-stat { padding: 1.5rem 0; background: var(--black); }
+  .hero-stat-val { font-family: 'DM Serif Display', serif; font-size: 2.2rem; font-weight: 400; line-height: 1; margin-bottom: 0.4rem; }
+  .hero-stat-label { font-size: 0.65rem; color: var(--mid); letter-spacing: 0.1em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; }
+
+  /* SHARED SECTION ELEMENTS */
+  .section-header { padding: 3rem 3.5rem 2rem; border-bottom: 1px solid var(--border-light); background: var(--white); color: var(--black); }
+  .section-tag { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); font-weight: 600; margin-bottom: 0.75rem; font-family: 'DM Sans', sans-serif; }
+  .section-tag-dark { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(242,240,235,0.4); font-weight: 600; margin-bottom: 0.75rem; font-family: 'DM Sans', sans-serif; }
+  .section-h2 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 400; line-height: 1.1; letter-spacing: -0.02em; color: var(--black); }
+  .section-h2 em { font-style: italic; color: #888880; }
+  .page-footer { background: var(--black); border-top: 1px solid var(--border-dark); padding: 1.5rem 3.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.62rem; letter-spacing: 0.1em; color: rgba(242,240,235,0.2); font-family: 'DM Sans', sans-serif; }
+  .page-footer-light { background: var(--white); border-top: 1px solid var(--border-light); padding: 1.5rem 3.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.62rem; letter-spacing: 0.1em; color: rgba(12,12,12,0.25); font-family: 'DM Sans', sans-serif; }
+
+  /* WORK PAGE */
+  .work-page { background: var(--white); color: var(--black); }
+  .work-list { padding: 0 3.5rem; }
+  .campaign-row { display: grid; grid-template-columns: 56px 1fr auto; gap: 2rem; align-items: start; padding: 2rem 3.5rem; border-bottom: 1px solid var(--border-light); cursor: pointer; transition: background 0.15s; }
+  .campaign-row:first-child { border-top: 1px solid var(--border-light); }
+  .campaign-row:hover { background: var(--cream); }
+  .camp-num { font-family: 'DM Sans', sans-serif; font-size: 0.62rem; letter-spacing: 0.2em; color: var(--mid); font-weight: 600; padding-top: 0.25rem; }
+  .camp-employer { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); font-family: 'DM Sans', sans-serif; font-weight: 500; margin-bottom: 0.4rem; }
+  .camp-title { font-family: 'DM Serif Display', serif; font-size: 1.25rem; font-weight: 400; line-height: 1.25; margin-bottom: 0.75rem; color: var(--black); }
+  .camp-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag { font-size: 0.58rem; letter-spacing: 0.09em; text-transform: uppercase; border: 1px solid var(--border-light); padding: 0.22rem 0.6rem; color: var(--mid); font-family: 'DM Sans', sans-serif; font-weight: 500; }
+  .camp-arrow { font-size: 1rem; color: var(--mid); padding-top: 0.25rem; transition: transform 0.2s, color 0.2s; }
+  .campaign-row:hover .camp-arrow { transform: translate(3px, -3px); color: var(--black); }
+
+  /* CAMPAIGN DETAIL */
+  .camp-detail { background: var(--white); color: var(--black); display: none; }
+  .camp-detail.active { display: block; animation: fadeIn 0.35s ease; }
+  .camp-detail-header { background: var(--black); color: var(--white); padding: 3rem 3.5rem; border-bottom: 1px solid var(--border-dark); }
+  .back-btn { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; margin-bottom: 2rem; padding: 0; transition: color 0.2s; }
+  .back-btn:hover { color: var(--white); }
+  .camp-detail-title { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 400; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1rem; max-width: 700px; }
+  .camp-detail-employer { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(242,240,235,0.4); font-family: 'DM Sans', sans-serif; font-weight: 500; margin-bottom: 0.75rem; }
+  .camp-detail-body { padding: 3rem 3.5rem; }
+  .camp-detail-desc { font-size: 1rem; line-height: 1.9; color: #3a3835; max-width: 680px; margin-bottom: 2.5rem; font-weight: 300; }
+  .metric-strip { display: flex; flex-wrap: wrap; border: 1px solid var(--border-light); background: var(--cream); margin-bottom: 2.5rem; }
+  .metric-cell { flex: 1 1 140px; padding: 1.25rem 1.5rem; border-right: 1px solid var(--border-light); }
+  .metric-cell:last-child { border-right: none; }
+  .metric-val { font-family: 'DM Serif Display', serif; font-size: 1.8rem; font-weight: 400; color: var(--black); line-height: 1; margin-bottom: 0.35rem; }
+  .metric-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mid); line-height: 1.4; font-family: 'DM Sans', sans-serif; }
+  .impact-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--black); color: var(--white); padding: 0.65rem 1.25rem; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; font-weight: 600; margin-bottom: 2.5rem; }
+  .camp-detail-links { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+  .detail-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.7rem; font-family: 'DM Sans', sans-serif; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--black); text-decoration: none; border-bottom: 1px solid var(--black); padding-bottom: 2px; transition: opacity 0.2s; }
+  .detail-link:hover { opacity: 0.5; }
+
+  /* MORE WORK */
+  .more-work-section { background: var(--white); padding: 3rem 3.5rem; border-top: 1px solid var(--border-light); }
+  .more-work-section h3 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; font-weight: 400; margin-bottom: 2rem; color: var(--black); }
+  .more-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border-light); }
+  .more-card { background: var(--white); padding: 1.25rem; }
+  .more-employer-sm { font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); font-family: 'DM Sans', sans-serif; font-weight: 500; margin-bottom: 0.4rem; }
+  .more-title-sm { font-family: 'DM Serif Display', serif; font-size: 0.9rem; font-weight: 400; line-height: 1.3; margin-bottom: 0.85rem; color: var(--black); }
+  .more-links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.75rem; }
+  .more-link { font-size: 0.6rem; font-family: 'DM Sans', sans-serif; font-weight: 600; letter-spacing: 0.06em; color: var(--black); text-decoration: none; border-bottom: 1px solid var(--black); padding-bottom: 1px; }
+  .more-link:hover { opacity: 0.5; }
+
+  /* ABOUT */
+  .about-hero { background: var(--black); color: var(--white); padding: 4rem 3.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; border-bottom: 1px solid var(--border-dark); }
+  .about-headline { font-family: 'DM Serif Display', serif; font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.02em; }
+  .about-headline em { font-style: italic; color: var(--mid); }
+  .about-intro { font-size: 0.95rem; line-height: 1.9; color: rgba(242,240,235,0.55); font-weight: 300; padding-top: 1rem; }
+  .about-avatar { width: 90px; height: 90px; border-radius: 50%; overflow: hidden; border: 2px solid rgba(242,240,235,0.15); margin: 2rem 0 1.5rem; flex-shrink: 0; }
+  .about-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .about-body { background: var(--white); color: var(--black); padding: 3.5rem 3.5rem; }
+  .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 5rem; margin-bottom: 4rem; }
+  .about-section-label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); font-family: 'DM Sans', sans-serif; font-weight: 600; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-light); }
+  .about-text { font-size: 0.95rem; line-height: 1.9; color: #3a3835; font-weight: 300; margin-bottom: 1.25rem; }
+  .exp-item { margin-bottom: 1.75rem; padding-bottom: 1.75rem; border-bottom: 1px solid var(--border-light); }
+  .exp-item:last-child { border-bottom: none; margin-bottom: 0; }
+  .exp-role { font-family: 'DM Serif Display', serif; font-size: 1.05rem; font-weight: 400; margin-bottom: 0.2rem; color: var(--black); }
+  .exp-company { font-size: 0.7rem; color: var(--mid); font-family: 'DM Sans', sans-serif; letter-spacing: 0.08em; font-weight: 500; margin-bottom: 0.1rem; }
+  .exp-date { font-size: 0.62rem; color: rgba(12,12,12,0.35); font-family: 'DM Sans', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* AWARDS */
+  .awards-band { background: var(--cream); padding: 3rem 3.5rem; border-top: 1px solid var(--border-light); }
+  .awards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border-light); }
+  .award-card { background: var(--cream); padding: 1.5rem; }
+  .award-icon { font-size: 1.3rem; margin-bottom: 0.85rem; }
+  .award-title { font-family: 'DM Serif Display', serif; font-size: 0.95rem; font-weight: 400; margin-bottom: 0.4rem; color: var(--black); }
+  .award-body { font-size: 0.78rem; color: var(--mid); line-height: 1.6; font-family: 'DM Sans', sans-serif; margin-bottom: 0.85rem; }
+  .award-year { font-size: 0.6rem; letter-spacing: 0.15em; color: var(--black); font-family: 'DM Sans', sans-serif; font-weight: 700; text-transform: uppercase; }
+
+  /* CONTACT */
+  .contact-page { background: var(--black); color: var(--white); min-height: 100vh; display: flex; flex-direction: column; }
+  .contact-hero { padding: 4rem 3.5rem 3rem; border-bottom: 1px solid var(--border-dark); flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .contact-headline { font-family: 'DM Serif Display', serif; font-size: clamp(3rem, 5.5vw, 5rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.025em; margin-bottom: 3rem; max-width: 680px; }
+  .contact-headline em { font-style: italic; color: var(--mid); }
+  .contact-sub { font-size: 0.95rem; color: rgba(242,240,235,0.45); line-height: 1.85; max-width: 480px; margin-bottom: 3rem; font-weight: 300; }
+  .contact-links-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border-dark); border: 1px solid var(--border-dark); }
+  .contact-link-card { background: var(--black); padding: 1.75rem; display: flex; justify-content: space-between; align-items: flex-end; text-decoration: none; color: var(--white); transition: background 0.15s; }
+  .contact-link-card:hover { background: #181818; }
+  .contact-link-label { font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(242,240,235,0.3); font-family: 'DM Sans', sans-serif; display: block; margin-bottom: 0.3rem; }
+  .contact-link-val { font-size: 0.88rem; font-family: 'DM Sans', sans-serif; font-weight: 400; }
+  .contact-arrow-sm { font-size: 1rem; color: rgba(242,240,235,0.3); }
+  .coming-soon-contact { background: var(--black); padding: 1.75rem; display: flex; justify-content: space-between; align-items: flex-end; opacity: 0.4; cursor: not-allowed; border: 1px solid var(--border-dark); border-top: none; }
+
+  /* PERSONAL PROJECTS */
+  .projects-page { background: var(--black); color: var(--white); min-height: 100vh; display: flex; flex-direction: column; }
+  .projects-hero { padding: 4rem 3.5rem 3rem; border-bottom: 1px solid var(--border-dark); }
+  .projects-intro { font-size: 0.95rem; line-height: 1.9; color: rgba(242,240,235,0.55); max-width: 560px; font-weight: 300; margin-top: 1.5rem; }
+  .projects-grid { padding: 3rem 3.5rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .project-card { border: 1px solid var(--border-dark); overflow: hidden; }
+  .project-card-visual { height: 220px; position: relative; overflow: hidden; }
+  .fluid-bg { width: 100%; height: 100%; position: relative; }
+  .fluid-bg canvas { width: 100%; height: 100%; display: block; }
+  .code-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
+  .code-block { background: rgba(12,12,12,0.75); border: 1px solid rgba(242,240,235,0.12); padding: 1.25rem 1.5rem; font-family: 'Courier New', monospace; font-size: 0.72rem; line-height: 1.8; color: var(--white); backdrop-filter: blur(4px); width: 100%; }
+  .code-key { color: #7dd3a8; }
+  .code-str { color: #f0c070; }
+  .code-bracket { color: rgba(242,240,235,0.4); }
+  .project-card-body { padding: 1.5rem; background: #111; }
+  .project-card-title { font-family: 'DM Serif Display', serif; font-size: 1.1rem; font-weight: 400; margin-bottom: 0.4rem; color: var(--white); }
+  .project-card-desc { font-size: 0.78rem; color: rgba(242,240,235,0.45); line-height: 1.7; font-family: 'DM Sans', sans-serif; margin-bottom: 1rem; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .project-tag { font-size: 0.58rem; letter-spacing: 0.09em; text-transform: uppercase; border: 1px solid rgba(242,240,235,0.15); padding: 0.22rem 0.6rem; color: rgba(242,240,235,0.4); font-family: 'DM Sans', sans-serif; }
+  .project-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.68rem; font-family: 'DM Sans', sans-serif; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); text-decoration: none; border-bottom: 1px solid rgba(242,240,235,0.3); padding-bottom: 2px; margin-top: 1rem; display: inline-block; transition: opacity 0.2s; }
+  .project-link:hover { opacity: 0.5; }
+  .coming-soon-card { border: 1px solid var(--border-dark); display: flex; align-items: center; justify-content: center; min-height: 320px; opacity: 0.3; }
+  .coming-soon-card-inner { text-align: center; }
+  .coming-soon-card-inner p { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); font-family: 'DM Sans', sans-serif; margin-top: 0.5rem; }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div>
+    <a class="sidebar-logo" onclick="showPage('home')">H·Siew<span>®</span></a>
+    <ul class="nav-links">
+      <li><a onclick="showPage('home')" class="active" id="nav-home"><span class="slash">/</span>Home</a></li>
+      <li><a onclick="showPage('work')" id="nav-work"><span class="slash">/</span>Work</a></li>
+      <li><a onclick="showPage('about')" id="nav-about"><span class="slash">/</span>About Me</a></li>
+      <li><a onclick="showPage('contact')" id="nav-contact"><span class="slash">/</span>Contact</a></li>
+      <li><a onclick="showPage('soon')" id="nav-soon"><span class="slash">/</span>Personal Projects</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="sidebar-availability"><span class="avail-dot"></span>Open to opportunities</div>
+    <div class="sidebar-meta">SG / MY<br>Brand &amp; Marketing<br>© 2025</div>
+  </div>
+</aside>
+
+<main class="main">
+
+  <!-- HOME -->
+  <div class="page active" id="page-home">
+    <div class="hero">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Brand &amp; Marketing Manager · SG / MY</p>
+        <h1 class="hero-headline">A full-funnel marketer<br>with a storyteller's<br><em>instinct.</em></h1>
+        <div class="hero-slash-line">
+          <span class="hero-slash">/</span>
+          <p class="hero-bio">Good marketing moves people. Great marketing moves the needle. I build campaigns that do both, starting with the revenue objective and working backwards to the idea. From brand strategy to performance media, CRM to content, I think in outcomes first and channels second. Creativity is how I get there, not where I start.</p>
+        </div>
+        <div class="hero-cta-row">
+          <button class="btn-primary" onclick="showPage('work')">View My Work →</button>
+          <button class="btn-ghost" onclick="showPage('contact')">Get in Touch</button>
+        </div>
+      </div>
+      <div class="hero-bottom">
+        <div class="hero-stat"><div class="hero-stat-val">8+</div><div class="hero-stat-label">Years across agency &amp; in-house</div></div>
+        <div class="hero-stat" style="padding-left:2rem"><div class="hero-stat-val">7</div><div class="hero-stat-label">Industry award wins across SG &amp; MY</div></div>
+        <div class="hero-stat" style="padding-left:2rem"><div class="hero-stat-val">6+</div><div class="hero-stat-label">Industries — F&amp;B · FinServ · Gov · Property · Tech · Lifestyle</div></div>
+      </div>
+    </div>
+    <div class="page-footer"><span>Helena Siew — Brand &amp; Marketing Manager</span><span><a href="/cdn-cgi/l/email-protection#254d4049560b564c4052654248444c490b464a48" style="color:inherit;text-decoration:none"><span class="__cf_email__" data-cfemail="4c2429203f623f25293b0c2b212d2520622f2321">[email&#160;protected]</span></a></span></div>
+  </div>
+
+  <!-- WORK -->
+  <div class="page" id="page-work">
+    <div id="work-list-view">
+      <div class="section-header">
+        <p class="section-tag">Selected Work</p>
+        <h2 class="section-h2">Campaigns &amp; <em>Projects.</em></h2>
+      </div>
+      <div style="background:var(--white)">
+        <div class="campaign-row" onclick="showCampaign(0)"><div class="camp-num">/001/</div><div><div class="camp-employer">Harry's International</div><div class="camp-title">Marketing, Brand Repositioning &amp; New Menu Launches</div><div class="camp-tags"><span class="tag">Email Marketing</span><span class="tag">Paid Ads</span><span class="tag">Digital Campaigns</span><span class="tag">Brand Strategy</span></div></div><div class="camp-arrow">↗</div></div>
+        <div class="campaign-row" onclick="showCampaign(1)"><div class="camp-num">/002/</div><div><div class="camp-employer">Harry's International</div><div class="camp-title">Loyalty Programme Refresh — Win a Business Class Trip to Koh Samui</div><div class="camp-tags"><span class="tag">CRM &amp; Loyalty</span><span class="tag">Email Marketing</span><span class="tag">Sponsorships</span></div></div><div class="camp-arrow">↗</div></div>
+        <div class="campaign-row" onclick="showCampaign(2)"><div class="camp-num">/003/</div><div><div class="camp-employer">Publicis · Client: Singapore Police Force</div><div class="camp-title">Anti-Scam Awareness Campaign 2025</div><div class="camp-tags"><span class="tag">Content Strategy</span><span class="tag">Creator Partnerships</span><span class="tag">Government</span></div></div><div class="camp-arrow">↗</div></div>
+        <div class="campaign-row" onclick="showCampaign(3)"><div class="camp-num">/004/</div><div><div class="camp-employer">Publicis · Client: SCDF</div><div class="camp-title">"What's Your Emergency?" Behaviour Change Campaign (2023–2024)</div><div class="camp-tags"><span class="tag">Content Strategy</span><span class="tag">Behaviour Change</span><span class="tag">TikTok</span></div></div><div class="camp-arrow">↗</div></div>
+        <div class="campaign-row" onclick="showCampaign(4)"><div class="camp-num">/005/</div><div><div class="camp-employer">Publicis · Client: Singapore Food Agency</div><div class="camp-title">SG Farm Tycoon — Urban Farming Education on Roblox</div><div class="camp-tags"><span class="tag">Gamification</span><span class="tag">Youth Engagement</span><span class="tag">Government</span></div></div><div class="camp-arrow">↗</div></div>
+        <div class="campaign-row" onclick="showCampaign(5)"><div class="camp-num">/006/</div><div><div class="camp-employer">Reprise · Client: UEM Sunrise</div><div class="camp-title">The Happy Chase — Property Gameshow Campaign</div><div class="camp-tags"><span class="tag">Gamification</span><span class="tag">Lead Generation</span><span class="tag">Social Media</span></div></div><div class="camp-arrow">↗</div></div>
+        <div class="campaign-row" onclick="showCampaign(6)"><div class="camp-num">/007/</div><div><div class="camp-employer">Ogilvy · Client: CIMB</div><div class="camp-title">CIMB Chinese New Year — Cinematic &amp; Interactive Festive Campaign 2019</div><div class="camp-tags"><span class="tag">Campaign Execution</span><span class="tag">Gamification</span><span class="tag">Financial Services</span></div></div><div class="camp-arrow">↗</div></div>
+        <div class="campaign-row" onclick="showCampaign(7)"><div class="camp-num">/008/</div><div><div class="camp-employer">Harry's International</div><div class="camp-title">Eat.Play.Race — F1 Season Brand Activation with Razer &amp; 99bends</div><div class="camp-tags"><span class="tag">Brand Partnerships</span><span class="tag">Sponsorships</span><span class="tag">Experiential</span></div></div><div class="camp-arrow">↗</div></div>
+        <div class="campaign-row" onclick="showCampaign(8)"><div class="camp-num">/009/</div><div><div class="camp-employer">Publicis · Client: Building &amp; Construction Authority</div><div class="camp-title">Reframing the Built Environment for Young Talent</div><div class="camp-tags"><span class="tag">Employer Branding</span><span class="tag">Video</span><span class="tag">Social Media</span></div></div><div class="camp-arrow">↗</div></div>
+        <div class="campaign-row" onclick="showCampaign(9)"><div class="camp-num">/010/</div><div><div class="camp-employer">Publicis · Client: Land Transport Authority</div><div class="camp-title">People Behind the Tracks</div><div class="camp-tags"><span class="tag">Employer Branding</span><span class="tag">Documentary Series</span><span class="tag">Government</span></div></div><div class="camp-arrow">↗</div></div>
+        <div class="campaign-row" onclick="showCampaign(10)"><div class="camp-num">/011/</div><div><div class="camp-employer">Jirnexu / RinggitPlus</div><div class="camp-title">Malaysian Financial Literacy Survey 2022</div><div class="camp-tags"><span class="tag">Brand Planning</span><span class="tag">Research</span><span class="tag">Go-to-Market</span></div></div><div class="camp-arrow">↗</div></div>
+      </div>
+      <div class="more-work-section">
+        <h3>/Other Campaigns &amp; Projects.</h3>
+        <div class="more-grid">
+          <div class="more-card"><div class="more-employer-sm">Publicis</div><div class="more-title-sm">MDDI Anti-Cyberbullying</div><div class="camp-tags"><span class="tag">KOL Campaign</span><span class="tag">Content Strategy</span><span class="tag">Government</span></div></div>
+          <div class="more-card"><div class="more-employer-sm">Publicis</div><div class="more-title-sm">NEA Public Hygiene 2024</div><div class="camp-tags"><span class="tag">Content Strategy</span><span class="tag">KOL Campaign</span><span class="tag">Government</span></div></div>
+          <div class="more-card"><div class="more-employer-sm">Publicis</div><div class="more-title-sm">MSE GoGreenSG 2023</div><div class="camp-tags"><span class="tag">KOL Campaign</span><span class="tag">Sustainability</span><span class="tag">Government</span></div></div>
+          <div class="more-card"><div class="more-employer-sm">Publicis</div><div class="more-title-sm">MOM Flexible Work Arrangements</div><div class="camp-tags"><span class="tag">KOL Campaign</span><span class="tag">Content Strategy</span><span class="tag">Government</span></div></div>
+          <div class="more-card"><div class="more-employer-sm">Publicis</div><div class="more-title-sm">Uniform Services Recruitment 2023/2024</div><div class="camp-tags" style="margin-bottom:0.75rem"><span class="tag">Content Strategy</span><span class="tag">Recruitment</span></div><div class="more-links"><a class="more-link" href="https://www.instagram.com/reels/C-9_C0qStuU/" target="_blank">Instagram ↗</a><a class="more-link" href="https://www.facebook.com/watch/?v=841938367511619" target="_blank">Facebook ↗</a></div></div>
+          <div class="more-card"><div class="more-employer-sm">Publicis</div><div class="more-title-sm">Energy Market Authority — Net Zero by 2050</div><div class="camp-tags" style="margin-bottom:0.75rem"><span class="tag">Content Strategy</span><span class="tag">Sustainability</span></div><div class="more-links"><a class="more-link" href="https://www.tiktok.com/@justkeepthinking/video/7323520494689422594" target="_blank">TikTok ↗</a></div></div>
+          <div class="more-card"><div class="more-employer-sm">Ogilvy</div><div class="more-title-sm">CIMB Hari Raya 2019</div><div class="camp-tags" style="margin-bottom:0.75rem"><span class="tag">Campaign Execution</span><span class="tag">Video</span></div><div class="more-links"><a class="more-link" href="https://campaignbriefasia.com/2019/01/31/celebrations-are-only-perfect/" target="_blank">Campaign Brief Asia ↗</a><a class="more-link" href="https://www.businesstoday.com.my/2019/05/31/a-grateful-heart-makes-life-meaningful-and-full-of-hope/" target="_blank">Business Today ↗</a></div></div>
+        </div>
+      </div>
+      <div class="page-footer-light"><span>Helena Siew — Selected Work</span><span>11 campaigns · 7 additional projects</span></div>
+    </div>
+
+    <!-- DETAIL VIEWS -->
+    <div id="work-detail-view" style="display:none">
+
+      <!-- 001 Harry's Brand Repositioning -->
+      <div class="camp-detail" id="detail-0">
+        <div class="camp-detail-header"><button class="back-btn" onclick="hideCampaign()">← Back to Work</button><div class="camp-detail-employer">Harry's International · /001/</div><h2 class="camp-detail-title">Marketing, Brand Repositioning &amp; New Menu Launches</h2><div class="camp-tags" style="margin-top:1rem"><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Email Marketing</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Paid Ads</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Digital Campaigns</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Brand Strategy</span></div></div>
+        <div class="camp-detail-body">
+          <div class="about-section-label">The Challenge</div>
+          <p class="camp-detail-desc">Harry's had been a Singapore fixture for 30 years, but familiarity had become its biggest obstacle. The brand was remembered, not chosen. Customers saw it as a place to drink, not a destination to dine. With 17 outlets to revitalise, the brief was clear: reposition Harry's as a go-to restaurant for all occasions, not just an afterthought on a night out.</p>
+          <div class="about-section-label">My Role</div>
+          <p class="camp-detail-desc">As the sole marketer, I owned the full marketing function end-to-end: campaign planning and execution, always-on and ad-hoc paid media (Meta and Google Ads), website maintenance and microsite builds, monthly EDM copywriting and design, social media content direction and community management, partnership management, brand compliance, and reporting across all marketing and reservations platforms.</p>
+          <div class="about-section-label">The Strategy</div>
+          <p class="camp-detail-desc">Repositioning required change from the inside out. Internally, we relaunched the menu around local dishes with a western twist, refreshed outlet interiors and exteriors, and rebuilt the loyalty programme with compelling member benefits and exclusive promotions. Externally, the strategy centred on giving both lapsed and new customers a compelling reason to walk back in, stay for the food, and keep coming back through rewards.</p>
+          <div class="about-section-label">The Execution</div>
+          <p class="camp-detail-desc">New menu launches were activated with 1-for-1 promotional mechanics to drive trial and footfall. Thematic festive campaigns reinforced brand presence at key calendar moments. Member-exclusive mini campaigns deepened loyalty and rewarded existing sign-ups. Across all touchpoints, the brand's digital look and feel was refreshed while staying true to Harry's voice, mission, and values.</p>
+          <div class="about-section-label">The Results</div>
+          <div class="metric-strip"><div class="metric-cell"><div class="metric-val">84%</div><div class="metric-label">Uplift in covers</div></div><div class="metric-cell"><div class="metric-val">+15%</div><div class="metric-label">Increase in average receipts</div></div><div class="metric-cell"><div class="metric-val">200%</div><div class="metric-label">YoY growth in web traffic</div></div></div>
+          <div class="about-section-label">See It In Action</div>
+          <div class="camp-detail-links"><a class="detail-link" href="https://www.instagram.com/reel/DOxr_RfDJ1z/" target="_blank">New Menu Launch Reel ↗</a><a class="detail-link" href="https://www.instagram.com/reel/DQTYu6aDVAD/" target="_blank">Seasonal Campaign ↗</a><a class="detail-link" href="https://www.instagram.com/reel/DSq6oHOjb-a/" target="_blank">Brand Content ↗</a><a class="detail-link" href="https://www.instagram.com/p/DTzzm9ok-3z/?img_index=4" target="_blank">CNY 2026 Post ↗</a><a class="detail-link" href="https://www.instagram.com/reel/DUFkd9Cku-g/" target="_blank">CNY 2026 Reel ↗</a></div>
+        </div>
+        <div class="page-footer-light"><span>Harry's International · Brand &amp; Menu Strategy</span><span>/001/</span></div>
+      </div>
+
+      <!-- 002 Harry's Loyalty -->
+      <div class="camp-detail" id="detail-1">
+        <div class="camp-detail-header"><button class="back-btn" onclick="hideCampaign()">← Back to Work</button><div class="camp-detail-employer">Harry's International · /002/</div><h2 class="camp-detail-title">Loyalty Programme Refresh — Win a Business Class Trip to Koh Samui</h2><div class="camp-tags" style="margin-top:1rem"><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">CRM &amp; Loyalty</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Email Marketing</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Paid Ads</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Sponsorships</span></div></div>
+        <div class="camp-detail-body">
+          <div class="about-section-label">The Challenge</div>
+          <p class="camp-detail-desc">Harry's had a loyalty programme, but it had never been properly campaigned. With a refreshed web-app in the works, the opportunity was to do more than announce a new look — to drive meaningful sign-ups and shift customer spending behaviour. The objectives were clear: grow the member base and encourage a minimum spend of $100 per customer.</p>
+          <div class="about-section-label">My Role</div>
+          <p class="camp-detail-desc">I led the campaign end-to-end alongside the CRM team — briefing and managing an external creative agency on messaging and positioning, sourcing and managing nano KOLs, building the campaign microsite, producing content and EDMs, running digital ads, and managing the campaign sponsorship.</p>
+          <div class="about-section-label">The Strategy</div>
+          <p class="camp-detail-desc">The mechanic had to be simple enough to participate in, but with a prize compelling enough to drive action. Sign up, unlock membership bonuses immediately, then spend $100 for a chance to win a fully paid business-class trip for two to a Koh Samui resort retreat. The prize gave people a genuine reason to sign up and return, while the instant membership perks rewarded them from day one.</p>
+          <div class="about-section-label">The Execution</div>
+          <p class="camp-detail-desc">Beyond owned media, nano KOLs were brought in to extend reach organically — because nothing sells a good deal like a trusted recommendation in your feed. In-store, we ran a parallel internal contest across all 17 outlets, motivating outlet teams to drive sign-ups on the ground. Marketing doesn't stop at the customer-facing layer; getting the frontline team behind the campaign was just as important as the digital push.</p>
+          <div class="about-section-label">The Results</div>
+          <div class="metric-strip"><div class="metric-cell"><div class="metric-val">82%</div><div class="metric-label">Revenue KPI achieved</div></div><div class="metric-cell"><div class="metric-val">~90%</div><div class="metric-label">Sign-up target met</div></div><div class="metric-cell"><div class="metric-val">2.4×</div><div class="metric-label">Return customer rate</div></div></div>
+          <div class="about-section-label">See It In Action</div>
+          <div class="camp-detail-links"><a class="detail-link" href="https://www.instagram.com/reel/DRBPNOrAu_s/" target="_blank">Campaign Reel 1 ↗</a><a class="detail-link" href="https://www.instagram.com/reel/DQrBM9Kj_Vp/" target="_blank">Campaign Reel 2 ↗</a><a class="detail-link" href="https://www.instagram.com/reel/DQG37P0CHoJ/" target="_blank">Campaign Reel 3 ↗</a><a class="detail-link" href="https://www.instagram.com/reel/DP3cTCzggtm/" target="_blank">Campaign Reel 4 ↗</a></div>
+        </div>
+        <div class="page-footer-light"><span>Harry's International · CRM &amp; Loyalty</span><span>/002/</span></div>
+      </div>
+
+      <!-- 003 SPF Anti-Scam -->
+      <div class="camp-detail" id="detail-2">
+        <div class="camp-detail-header"><button class="back-btn" onclick="hideCampaign()">← Back to Work</button><div class="camp-detail-employer">Publicis · Singapore Police Force · /003/</div><h2 class="camp-detail-title">Anti-Scam Awareness Campaign 2025</h2><div class="camp-tags" style="margin-top:1rem"><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Content Strategy</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Creator Partnerships</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Public Education</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Government</span></div></div>
+        <div class="camp-detail-body">
+          <div class="impact-badge">🥇 GOLD — MEA Excellence in Content Marketing 2025</div>
+          <div class="about-section-label">The Challenge</div>
+          <p class="camp-detail-desc">Scam cases in Singapore were on the rise, and the tactics were evolving faster than public awareness could keep up. By 2024, Singapore had recorded tens of thousands of scam cases annually, with losses running into the hundreds of millions. The challenge wasn't just awareness — it was relevance. Scams span five distinct categories: investment scams, love scams, fake friend scams, government impersonation, and phishing. Each preys on different vulnerabilities, different demographics, and different emotional triggers. A one-size-fits-all approach wouldn't cut it.</p>
+          <div class="about-section-label">My Role</div>
+          <p class="camp-detail-desc">I led content strategy, campaign planning, stakeholder management, cross-functional coordination, and execution with content aggregators and creators — from brief to final delivery.</p>
+          <div class="about-section-label">The Strategy</div>
+          <p class="camp-detail-desc">We started with the human truth: people don't get scammed because they're careless, they get scammed because scammers are sophisticated. The strategy was to meet different consumer groups where they were most vulnerable — breaking audiences down by lifestyle, emotional triggers, and platform behaviour to determine what kind of content would actually land.</p>
+          <div class="about-section-label">The Execution</div>
+          <p class="camp-detail-desc">Rather than generic warnings, we built a content ecosystem that brought scam scenarios to life: dramatised situations showing the exact moment a person becomes vulnerable, explainers on how to spot a scam, real-life victim stories, behind-the-scenes looks at scam syndicates, and coverage of what authorities are actively doing to fight back. We also encouraged ongoing participation through SPF's ScamShield initiative, educating the public on the scam call hotline and the importance of reporting near-misses. A separate content strand targeted overseas audiences on Xiaohongshu, addressing job scams targeting individuals seeking employment in Singapore.</p>
+          <div class="about-section-label">The Results</div>
+          <div class="impact-badge" style="margin-bottom:0">🥇 GOLD — MEA Excellence in Content Marketing 2025 — Best-in-class behaviour change through content</div>
+          <div class="about-section-label" style="margin-top:1.5rem">See It In Action</div>
+          <div class="camp-detail-links"><a class="detail-link" href="https://www.youtube.com/watch?v=TvyEbtZh_0w" target="_blank">Award-Winning Film ↗</a><span style="font-size:0.7rem;color:var(--mid);font-family:'DM Sans',sans-serif;align-self:center">· More links coming soon</span></div>
+        </div>
+        <div class="page-footer-light"><span>Singapore Police Force · Content Strategy</span><span>/003/</span></div>
+      </div>
+
+      <!-- 004 SCDF -->
+      <div class="camp-detail" id="detail-3">
+        <div class="camp-detail-header"><button class="back-btn" onclick="hideCampaign()">← Back to Work</button><div class="camp-detail-employer">Publicis · SCDF · /004/</div><h2 class="camp-detail-title">"What's Your Emergency?" Behaviour Change Campaign (2023–2024)</h2><div class="camp-tags" style="margin-top:1rem"><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Content Strategy</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Behaviour Change</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">TikTok</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Government</span></div></div>
+        <div class="camp-detail-body">
+          <div class="metric-strip"><div class="metric-cell"><div class="metric-val">🏆</div><div class="metric-label">TikTok Best Branding 2024</div></div><div class="metric-cell"><div class="metric-val">🥈</div><div class="metric-label">MEA Brand Awareness Silver 2024</div></div><div class="metric-cell"><div class="metric-val">🥉</div><div class="metric-label">Markies Gov/Non-Profit Bronze 2023</div></div></div>
+          <div class="about-section-label">The Challenge</div>
+          <p class="camp-detail-desc">Total EMS calls to SCDF surged to 256,837 in 2022, a 20.2% increase from 213,615 in 2021. Non-emergency calls grew by 27.5% and false alarms by 8.8%, tying up resources that should be reserved for life-threatening situations. The root behaviour was deeply human: when something goes wrong, the instinct is to call for help immediately. But not everything is an emergency. The challenge was to shift that instinct through education, without diminishing urgency when it truly matters.</p>
+          <div class="about-section-label">My Role</div>
+          <p class="camp-detail-desc">I built the content strategy alongside the team, managed stakeholder and external partner relationships, oversaw budget management, and led cross-functional coordination across the campaign.</p>
+          <div class="about-section-label">The Strategy</div>
+          <p class="camp-detail-desc">The core message was simple: Call 995 — but only when it's a real emergency. Always-on, bite-sized content was deployed across multiple formats, each playing a distinct role. A music video anchored the campaign for top-of-mind recall. Short branded ads educated audiences on the three most common non-emergency situations. Content creators across different categories ensured the message stayed relevant and engaging across audience segments. During festive seasons, KOLs were activated to ride on trending moments and deliver timely education on what does and doesn't constitute an emergency.</p>
+          <div class="about-section-label">The Execution</div>
+          <p class="camp-detail-desc">Three content pillars worked in tandem: the anchor music video for awareness and recall; short branded ads showcasing real non-emergency scenarios; and a creator network providing always-on reach across lifestyle, family, and community categories. Non-conveyance messaging was woven throughout, directing non-emergency cases to visit the nearest clinic or call 1777 instead.</p>
+          <div class="about-section-label">The Results</div>
+          <div class="metric-strip"><div class="metric-cell"><div class="metric-val">1.2M</div><div class="metric-label">Reach (+244% above benchmark)</div></div><div class="metric-cell"><div class="metric-val">2×</div><div class="metric-label">Brand favourability</div></div><div class="metric-cell"><div class="metric-val">7.1%</div><div class="metric-label">Reduction in non-emergency calls</div></div></div>
+          <div class="about-section-label">See It In Action</div>
+          <div class="camp-detail-links"><a class="detail-link" href="https://www.youtube.com/watch?v=GHIui58LRzw" target="_blank">Campaign Film ↗</a></div>
+        </div>
+        <div class="page-footer-light"><span>SCDF · Behaviour Change Campaign</span><span>/004/</span></div>
+      </div>
+
+      <!-- 005 SFA SG Farm Tycoon -->
+      <div class="camp-detail" id="detail-4">
+        <div class="camp-detail-header"><button class="back-btn" onclick="hideCampaign()">← Back to Work</button><div class="camp-detail-employer">Publicis · Singapore Food Agency · /005/</div><h2 class="camp-detail-title">SG Farm Tycoon — Urban Farming Education on Roblox</h2><div class="camp-tags" style="margin-top:1rem"><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Gamification</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Content Strategy</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Youth Engagement</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Government</span></div></div>
+        <div class="camp-detail-body">
+          <div class="impact-badge">🥇 GOLD — Best Use of Gamification · Marketing Events Awards Singapore 2024</div>
+          <div class="about-section-label">The Brief</div>
+          <p class="camp-detail-desc">Singapore's food security depends on growing local — but getting Gen Z and Gen Alpha to care about urban farming required meeting them somewhere they already were. The Singapore Food Agency needed an approach that went beyond conventional education to make the message genuinely stick with a generation that expects to be entertained first.</p>
+          <div class="about-section-label">The Strategy</div>
+          <p class="camp-detail-desc">If the audience lives on Roblox, take the campaign to Roblox. SG Farm Tycoon was designed as an immersive farming game that wove educational content about modern agriculture, urban farming technologies, and Singapore's food future directly into gameplay. SFA's local produce mascots — Caixinderella, Eggs Benedette C, and Seabasstian Water — gave the experience a familiar, playful identity that resonated with younger players.</p>
+          <div class="about-section-label">The Execution</div>
+          <p class="camp-detail-desc">The game balanced captivating gameplay with layered learning across varied levels and challenges, letting players explore real farming concepts without it feeling like a lesson. The result was an experience young audiences chose to engage with on their own terms, for longer than expected.</p>
+          <div class="about-section-label">The Results</div>
+          <div class="metric-strip"><div class="metric-cell"><div class="metric-val">3,600+</div><div class="metric-label">Game sessions</div></div><div class="metric-cell"><div class="metric-val">1,200+</div><div class="metric-label">Unique users (94% in SG)</div></div><div class="metric-cell"><div class="metric-val">14.9 min</div><div class="metric-label">Avg session (+57% vs APAC benchmark)</div></div><div class="metric-cell"><div class="metric-val">91%</div><div class="metric-label">Like ratio (vs 80% APAC benchmark)</div></div></div>
+          <div class="about-section-label">Press Coverage</div>
+          <div class="camp-detail-links"><a class="detail-link" href="https://marketech-apac.com/sg-govt-partners-with-starcom-sg-publicis-play-to-launch-immersive-urban-farming-game-on-roblox/" target="_blank">Marketech APAC ↗</a><a class="detail-link" href="https://campaignbriefasia.com/2023/12/11/singapore-government-starcom-singapore-and-publicis-play-launch-sg-farm-tycoon-on-roblox/" target="_blank">Campaign Brief Asia ↗</a></div>
+        </div>
+        <div class="page-footer-light"><span>Singapore Food Agency · Gamification</span><span>/005/</span></div>
+      </div>
+
+      <!-- 006 UEM Sunrise -->
+      <div class="camp-detail" id="detail-5">
+        <div class="camp-detail-header"><button class="back-btn" onclick="hideCampaign()">← Back to Work</button><div class="camp-detail-employer">Reprise · UEM Sunrise · /006/</div><h2 class="camp-detail-title">The Happy Chase — Property Gameshow Campaign</h2><div class="camp-tags" style="margin-top:1rem"><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Campaign Strategy</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Gamification</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Lead Generation</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Social Media</span></div></div>
+        <div class="camp-detail-body">
+          <div class="about-section-label">The Challenge</div>
+          <p class="camp-detail-desc">COVID-19 didn't just pause daily life — it froze life decisions. Purchasing a home requires confidence in the future, and in 2020, that confidence had all but evaporated. Showgalleries were closed, families were separated, and the idea of committing to a property felt impossible. For UEM Sunrise, the pipeline of prospective buyers had stalled entirely.</p>
+          <div class="about-section-label">The Strategy</div>
+          <p class="camp-detail-desc">Instead of waiting for the world to reopen, we brought the show gallery to people's living rooms. The insight was simple: Malaysians were home, they were online, and live content was having a moment. We created The Happy Chase, a gamified live property gameshow on Facebook that let viewers explore homes, participate in quizzes, and engage with the brand in real time. Crucially, every episode was fully live, not pre-recorded, which made it feel like an event worth showing up for.</p>
+          <div class="about-section-label">My Role</div>
+          <p class="camp-detail-desc">I helped plan and execute the campaign from digital and social content, arranging scripts, and adding a gamified quiz for viewers to participate in between online show home walkthroughs. I engaged Baki Zainal as host, alongside a representative from UEM Sunrise.</p>
+          <div class="about-section-label">The Execution</div>
+          <p class="camp-detail-desc">Four consecutive live episodes were produced, each featuring virtual show home walkthroughs interspersed with interactive quiz segments to keep viewers engaged. TV host Baki Zainal fronted the show alongside a UEM Sunrise representative, bringing energy and credibility to what could easily have felt like a glorified sales presentation.</p>
+          <div class="about-section-label">The Results</div>
+          <div class="metric-strip"><div class="metric-cell"><div class="metric-val">747</div><div class="metric-label">Leads vs 400 target</div></div><div class="metric-cell"><div class="metric-val">27M</div><div class="metric-label">Total impressions</div></div><div class="metric-cell"><div class="metric-val">696K</div><div class="metric-label">Video views</div></div><div class="metric-cell"><div class="metric-val">49K</div><div class="metric-label">Engagements</div></div></div>
+          <div class="about-section-label">Press Coverage</div>
+          <div class="camp-detail-links"><a class="detail-link" href="https://theedgemalaysia.com/article/uem-sunrise-launches-happy-chase-gameshow-0" target="_blank">The Edge ↗</a><a class="detail-link" href="https://themalaysianreserve.com/2020/08/18/uem-sunrise-launches-the-happy-chase-gameshow/" target="_blank">Malaysian Reserve ↗</a></div>
+        </div>
+        <div class="page-footer-light"><span>UEM Sunrise · Gamified Lead Gen</span><span>/006/</span></div>
+      </div>
+
+      <!-- 007 CIMB CNY -->
+      <div class="camp-detail" id="detail-6">
+        <div class="camp-detail-header"><button class="back-btn" onclick="hideCampaign()">← Back to Work</button><div class="camp-detail-employer">Ogilvy · CIMB · /007/</div><h2 class="camp-detail-title">CIMB Chinese New Year — Cinematic &amp; Interactive Festive Campaign 2019</h2><div class="camp-tags" style="margin-top:1rem"><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Campaign Execution</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Gamification</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Video</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Financial Services</span></div></div>
+        <div class="camp-detail-body">
+          <div class="metric-strip"><div class="metric-cell"><div class="metric-val">🎖️</div><div class="metric-label">Shortlisted — APPIES Asia Pacific 2019</div></div><div class="metric-cell"><div class="metric-val">⭐</div><div class="metric-label">Top CNY Festive Ad — Campaign Asia 2019</div></div></div>
+          <div class="about-section-label">The Campaign</div>
+          <p class="camp-detail-desc">A cinematic Chinese New Year campaign for CIMB that combined an emotional brand film with an interactive digital game — bringing together storytelling and gamification to drive both brand affinity and audience participation during one of the most competitive festive advertising periods of the year.</p>
+          <div class="about-section-label">The Results</div>
+          <div class="metric-strip"><div class="metric-cell"><div class="metric-val">76.8M</div><div class="metric-label">Total impressions</div></div><div class="metric-cell"><div class="metric-val">14.2M</div><div class="metric-label">Total engagements</div></div><div class="metric-cell"><div class="metric-val">11.3M</div><div class="metric-label">Video views</div></div><div class="metric-cell"><div class="metric-val">167K</div><div class="metric-label">Game plays</div></div></div>
+        </div>
+        <div class="page-footer-light"><span>CIMB · CNY Festive Campaign</span><span>/007/</span></div>
+      </div>
+
+      <!-- 008 Harry's F1 -->
+      <div class="camp-detail" id="detail-7">
+        <div class="camp-detail-header"><button class="back-btn" onclick="hideCampaign()">← Back to Work</button><div class="camp-detail-employer">Harry's International · /008/</div><h2 class="camp-detail-title">Eat.Play.Race — F1 Season Brand Activation with Razer &amp; 99bends</h2><div class="camp-tags" style="margin-top:1rem"><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Brand Partnerships</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Sponsorships</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Experiential</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Digital Campaigns</span></div></div>
+        <div class="camp-detail-body">
+          <div class="about-section-label">The Activation</div>
+          <p class="camp-detail-desc">Harry's is already a go-to destination for F1 live screenings. Eat.Play.Race took that further — giving customers a chance to get behind the wheel themselves with a racing simulator powered by 99bends and supported by Razer. Across participating outlets, customers could compete for the fastest lap prize at each location, and collect stamps across three outlets to unlock an exclusive goodie bag.</p>
+          <div class="about-section-label">My Role</div>
+          <p class="camp-detail-desc">I managed end-to-end execution: coordinating cross-functionally with Razer and 99bends, producing social content and the campaign microsite, and overseeing prize fulfilment. I also worked with the CRM team to build an in-app feature allowing customers to log their race times and track stamp collection digitally.</p>
+          <div class="about-section-label">The Impact</div>
+          <div class="impact-badge">⭐ STB-Recognised F1 Local Brand Participant</div>
+          <p class="camp-detail-desc">The activation was recognised by the Singapore Tourism Board as an official F1 local brand participant, and was featured across publication aggregators as a recommended pit-stop for food, drinks, and racing during the F1 season.</p>
+        </div>
+        <div class="page-footer-light"><span>Harry's International · Brand Activation</span><span>/008/</span></div>
+      </div>
+
+      <!-- 009 BCA -->
+      <div class="camp-detail" id="detail-8">
+        <div class="camp-detail-header"><button class="back-btn" onclick="hideCampaign()">← Back to Work</button><div class="camp-detail-employer">Publicis · Building &amp; Construction Authority · /009/</div><h2 class="camp-detail-title">Reframing the Built Environment for Young Talent</h2><div class="camp-tags" style="margin-top:1rem"><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Content Strategy</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Employer Branding</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Video</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Social Media</span></div></div>
+        <div class="camp-detail-body">
+          <div class="about-section-label">The Challenge</div>
+          <p class="camp-detail-desc">Singapore's Built Environment sector was modernising fast — drones, automation, robotics, green buildings — but its reputation hadn't caught up. Among students and young graduates, the industry was still seen as physically demanding, low-tech, and unglamorous. BCA needed to change that perception to attract the next generation of talent before the pipeline ran dry.</p>
+          <div class="about-section-label">The Strategy</div>
+          <p class="camp-detail-desc">Rather than telling young people the industry had changed, we showed them. A documentary-style content approach put real projects and real people front and centre — high-tech infrastructure like Sensoryscape and the Deep Tunnel Sewerage System Phase 2, and women carving out careers in construction engineering. Stories that challenged assumptions and made the sector feel like somewhere a young, ambitious person would actually want to build a future.</p>
+          <div class="about-section-label">The Execution</div>
+          <p class="camp-detail-desc">Content was distributed across YouTube, Facebook, Instagram, and TikTok to meet students and graduating cohorts where they spent their time. Each platform played to its strengths — longer documentary formats for YouTube, snackable cuts for TikTok and Instagram Reels.</p>
+          <div class="about-section-label">See It In Action</div>
+          <div class="camp-detail-links"><a class="detail-link" href="https://youtube.com/watch?v=gTT61QRZfGA" target="_blank">YouTube ↗</a><a class="detail-link" href="https://www.facebook.com/ourgrandfatherstory/videos/332091059953617/" target="_blank">Facebook ↗</a><a class="detail-link" href="https://www.instagram.com/reels/C9MD6gVyg6o/" target="_blank">Instagram ↗</a><a class="detail-link" href="https://www.tiktok.com/@sgag_sg/video/7332040142045056258" target="_blank">TikTok ↗</a></div>
+        </div>
+        <div class="page-footer-light"><span>BCA · Employer Branding</span><span>/009/</span></div>
+      </div>
+
+      <!-- 010 LTA -->
+      <div class="camp-detail" id="detail-9">
+        <div class="camp-detail-header"><button class="back-btn" onclick="hideCampaign()">← Back to Work</button><div class="camp-detail-employer">Publicis · Land Transport Authority · /010/</div><h2 class="camp-detail-title">People Behind the Tracks</h2><div class="camp-tags" style="margin-top:1rem"><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Content Strategy</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Employer Branding</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Documentary Series</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Government</span></div></div>
+        <div class="camp-detail-body">
+          <div class="about-section-label">The Challenge</div>
+          <p class="camp-detail-desc">Singapore's public transport network runs with remarkable precision — but the people who make that possible are largely invisible to the commuters who rely on them daily. LTA needed to shift that, building both public appreciation for the workforce and a stronger employer brand to attract new talent into the industry.</p>
+          <div class="about-section-label">The Strategy</div>
+          <p class="camp-detail-desc">Institutional messaging about transport infrastructure doesn't move people. Personal stories do. The approach was to go human-first — a documentary content series that put the spotlight on the real individuals keeping Singapore's trains and buses running, in partnership with SMRT, SBS Transit, and other operators.</p>
+          <div class="about-section-label">The Execution</div>
+          <p class="camp-detail-desc">A three-part video series brought different roles and stories to life, turning what could have been a corporate communications exercise into something people actually wanted to watch. By making the workforce the heroes of the story, the content served a dual purpose: deepening public appreciation for the industry and repositioning it as a meaningful place to build a career.</p>
+          <div class="about-section-label">See It In Action</div>
+          <div class="camp-detail-links"><a class="detail-link" href="https://www.youtube.com/watch?v=wFBgEr3yd_0" target="_blank">Episode 1 ↗</a><a class="detail-link" href="https://www.youtube.com/watch?v=hBWetPOB2oQ" target="_blank">Episode 2 ↗</a><a class="detail-link" href="https://www.youtube.com/watch?v=byZh0D0THOI" target="_blank">Episode 3 ↗</a></div>
+        </div>
+        <div class="page-footer-light"><span>LTA · Documentary Series</span><span>/010/</span></div>
+      </div>
+
+      <!-- 011 RinggitPlus -->
+      <div class="camp-detail" id="detail-10">
+        <div class="camp-detail-header"><button class="back-btn" onclick="hideCampaign()">← Back to Work</button><div class="camp-detail-employer">Jirnexu / RinggitPlus · /011/</div><h2 class="camp-detail-title">Malaysian Financial Literacy Survey 2022</h2><div class="camp-tags" style="margin-top:1rem"><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Brand Planning</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Research</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Go-to-Market</span><span class="tag" style="border-color:rgba(242,240,235,0.2);color:rgba(242,240,235,0.5)">Financial Services</span></div></div>
+        <div class="camp-detail-body">
+          <div class="about-section-label">The Brief</div>
+          <p class="camp-detail-desc">The RinggitPlus Malaysian Financial Literacy Survey is an annual national study examining how Malaysians save, spend, plan for retirement, adopt insurance, and navigate digital finance — broken down across income levels to surface actionable insights for the industry and policymakers. Each year, the study sharpens its focus on a specific behaviour or gap in financial literacy, ensuring the findings stay timely and relevant.</p>
+          <div class="about-section-label">My Role</div>
+          <p class="camp-detail-desc">I owned the study end-to-end: from research strategy and survey design through to go-to-market execution, sponsorship development, and stakeholder management. Findings were presented at a media launch event attended by publications and sponsors, positioning RinggitPlus as the definitive voice on Malaysian personal finance behaviour and driving brand visibility across the financial services landscape.</p>
+          <div class="about-section-label">The Impact</div>
+          <p class="camp-detail-desc">The annual survey established RinggitPlus as a credible, go-to authority on Malaysian financial literacy, generating consistent media coverage and reinforcing the brand's relevance with both consumers and industry partners.</p>
+          <div class="about-section-label">Read the Report</div>
+          <div class="camp-detail-links"><a class="detail-link" href="https://ringgitplus.com/en/ringgitplus-malaysian-financial-literacy-survey-2022/" target="_blank">RMFLS 2022 ↗</a></div>
+        </div>
+        <div class="page-footer-light"><span>RinggitPlus · Research &amp; Brand</span><span>/011/</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="page" id="page-about">
+    <div class="about-hero">
+      <div>
+        <p class="section-tag-dark" style="margin-bottom:1.5rem">About Me</p>
+        <h2 class="about-headline">Strategist.<br><em>Storyteller.</em><br>Marketer.</h2>
+        <div class="about-avatar"><img src="data:image/jpeg;base64,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" alt="Helena Siew"></div>
+      </div>
+      <p class="about-intro">I'm Helena — a Brand &amp; Marketing Manager with a decade of experience building campaigns, brands, and growth strategies across Singapore and Malaysia. I thrive at the intersection of creativity and commercial rigour.</p>
+    </div>
+    <div class="about-body">
+      <div class="about-grid">
+        <div>
+          <div class="about-section-label">The Story</div>
+          <p class="about-text">My career has taken me across the full marketing spectrum — from agency life at Ogilvy, Reprise, and Publicis, to in-house roles where I've owned brand strategy, CRM, and performance marketing end-to-end. I've worked with government bodies, BSFI brands, lifestyle companies, tech startups, and DTC businesses.</p>
+          <p class="about-text">What ties it all together is a belief that great marketing is equal parts strategy and empathy. Understanding what moves people — and building systems that scale those insights — is what I do best.</p>
+          <p class="about-text">Currently open to Brand &amp; Marketing Manager roles across Singapore and the region.</p>
+        </div>
+        <div>
+          <div class="about-section-label">Experience</div>
+          <div class="exp-item"><div class="exp-role">Marketing Manager</div><div class="exp-company">Harry's International</div><div class="exp-date">2025 — 2026</div></div>
+          <div class="exp-item"><div class="exp-role">Content Marketing Manager</div><div class="exp-company">Publicis Groupe</div><div class="exp-date">2022 — 2025</div></div>
+          <div class="exp-item"><div class="exp-role">Brand &amp; Communications Manager</div><div class="exp-company">Jirnexu / RinggitPlus</div><div class="exp-date">2022</div></div>
+          <div class="exp-item"><div class="exp-role">Brand &amp; Social Manager</div><div class="exp-company">IPG Mediabrands (Reprise)</div><div class="exp-date">2020 — 2022</div></div>
+          <div class="exp-item"><div class="exp-role">Account Executive</div><div class="exp-company">Ogilvy Malaysia</div><div class="exp-date">2017 — 2019</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="awards-band">
+      <p class="section-tag" style="margin-bottom:1.5rem">Recognition</p>
+      <h3 style="font-family:'DM Serif Display',serif;font-size:1.8rem;font-weight:400;margin-bottom:2rem;color:var(--black)">Work That Has Been <em style="font-style:italic;color:#888880">Recognised.</em></h3>
+      <div class="awards-grid">
+        <div class="award-card"><div class="award-icon">🥇</div><div class="award-title">GOLD — Content Marketing Excellence</div><div class="award-body">SPF 2025 anti-scam content strategy across multiple scam verticals.</div><div class="award-year">2025 · MEA Singapore</div></div>
+        <div class="award-card"><div class="award-icon">🥇</div><div class="award-title">GOLD — Best Use of Gamification</div><div class="award-body">SFA's SG Farm Tycoon — urban farming education on Roblox for Gen Z &amp; Alpha.</div><div class="award-year">2024 · Marketing Events Awards Singapore</div></div>
+        <div class="award-card"><div class="award-icon">🏆</div><div class="award-title">Best Branding Campaign</div><div class="award-body">SCDF's 'What's Your Emergency?' — behaviour change content.</div><div class="award-year">2024 · TikTok Singapore</div></div>
+        <div class="award-card"><div class="award-icon">🥈</div><div class="award-title">SILVER — Brand Awareness Excellence</div><div class="award-body">SCDF campaign's measurable impact on public awareness.</div><div class="award-year">2024 · MEA Singapore</div></div>
+        <div class="award-card"><div class="award-icon">🥉</div><div class="award-title">BRONZE — Most Effective Use, Gov/Non-Profit</div><div class="award-body">Effective use of digital channels in the government sector.</div><div class="award-year">2023 · Markies Singapore</div></div>
+        <div class="award-card"><div class="award-icon">🎖️</div><div class="award-title">Shortlisted — APPIES Marketing Awards</div><div class="award-body">CIMB CNY interactive mobile game — gamification in FinServ.</div><div class="award-year">2019 · APPIES Asia Pacific</div></div>
+        <div class="award-card"><div class="award-icon">⭐</div><div class="award-title">Top CNY Festive Ad of the Year</div><div class="award-body">Rated a top festive ad of 2019 by Campaign Asia.</div><div class="award-year">2019 · Campaign Asia</div></div>
+      </div>
+    </div>
+    <div class="page-footer-light"><span>Helena Siew — About</span><span>SG / MY · Open to opportunities</span></div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="page" id="page-contact">
+    <div class="contact-page">
+      <div class="contact-hero">
+        <p class="section-tag-dark">Contact</p>
+        <h2 class="contact-headline">Let's Build<br>Something<br><em>Worth Measuring.</em></h2>
+        <p class="contact-sub">Open to Brand &amp; Marketing Manager roles across Singapore and the region. I bring strategy, creative direction, and the executional rigour to make campaigns deliver.</p>
+        <div class="contact-links-grid">
+          <a class="contact-link-card" href="/cdn-cgi/l/email-protection#9af2fff6e9b4e9f3ffeddafdf7fbf3f6b4f9f5f7"><div><span class="contact-link-label">Email</span><span class="contact-link-val"><span class="__cf_email__" data-cfemail="5139343d227f2238342611363c30383d7f323e3c">[email&#160;protected]</span></span></div><span class="contact-arrow-sm">↗</span></a>
+          <a class="contact-link-card" href="https://www.linkedin.com/in/helenasiew/" target="_blank"><div><span class="contact-link-label">LinkedIn</span><span class="contact-link-val">linkedin.com/in/helenasiew</span></div><span class="contact-arrow-sm">↗</span></a>
+          <a class="contact-link-card" href="./Helena_Siew_CV_2026.pdf" download><div><span class="contact-link-label">Resume</span><span class="contact-link-val">Download CV</span></div><span class="contact-arrow-sm">↓</span></a>
+        </div>
+        <div class="coming-soon-contact"><div><span class="contact-link-label">Personality &amp; Working Style</span><span class="contact-link-val" style="font-size:0.85rem;font-family:'DM Sans',sans-serif">Learn more about how I work</span></div><span style="font-size:0.58rem;background:rgba(242,240,235,0.08);padding:0.2rem 0.5rem;letter-spacing:0.12em;text-transform:uppercase;font-family:'DM Sans',sans-serif">Coming Soon</span></div>
+      </div>
+      <div class="page-footer"><span>© 2025 Helena Siew</span><span>Brand &amp; Marketing Manager · SG / MY</span></div>
+    </div>
+  </div>
+
+  <!-- PERSONAL PROJECTS -->
+  <div class="page" id="page-soon">
+    <div class="projects-page">
+      <div class="projects-hero">
+        <p class="section-tag-dark">Personal Projects</p>
+        <h2 class="contact-headline">Staying sharp by<br>building with <em>AI.</em></h2>
+        <p class="projects-intro">I use AI the same way I use any other tool — to move faster, think clearer, and build things that would otherwise take a team. I'm also actively upskilling, picking up courses and experimenting hands-on, because the marketers who understand these tools will be the ones shaping what comes next.</p>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-card-visual">
+            <canvas id="fluidCanvas" style="width:100%;height:100%;display:block;"></canvas>
+            <div class="code-overlay">
+              <div class="code-block">
+                <span class="code-bracket">const</span> <span class="code-key">marketer</span> <span class="code-bracket">= {</span><br>
+                &nbsp;&nbsp;<span class="code-key">name</span><span class="code-bracket">:</span> <span class="code-str">"Helena.S"</span><span class="code-bracket">,</span><br>
+                &nbsp;&nbsp;<span class="code-key">tools</span><span class="code-bracket">: [</span><span class="code-str">"Claude"</span><span class="code-bracket">,</span> <span class="code-str">"GitHub"</span><span class="code-bracket">],</span><br>
+                &nbsp;&nbsp;<span class="code-key">building</span><span class="code-bracket">:</span> <span class="code-str">"portfolio.html"</span><br>
+                <span class="code-bracket">}</span>
+              </div>
+            </div>
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-title">Marketing Portfolio</div>
+            <p class="project-card-desc">Built end-to-end using Claude AI and deployed on GitHub Pages. From copywriting to code — a fully AI-assisted personal project.</p>
+            <div class="project-tags"><span class="project-tag">Claude AI</span><span class="project-tag">GitHub Pages</span><span class="project-tag">HTML / CSS</span><span class="project-tag">Prompt Engineering</span></div>
+            <a class="project-link" href="https://helsiew.github.io" target="_blank">View Live ↗</a>
+          </div>
+        </div>
+        <div class="coming-soon-card">
+          <div class="coming-soon-card-inner">
+            <div style="font-family:'DM Serif Display',serif;font-size:3rem;color:rgba(242,240,235,0.15)">+</div>
+            <p>More coming soon</p>
+          </div>
+        </div>
+      </div>
+      <div class="page-footer"><span>Helena Siew — Personal Projects</span><span>AI · Tools · Experiments</span></div>
+    </div>
+  </div>
+
+</main>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js">  // Fluid canvas animation
+  function initFluidCanvas() {
+    const canvas = document.getElementById('fluidCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    function resize() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+    resize();
+    const blobs = [
+      { x: 0.2, y: 0.3, r: 0.45, dx: 0.0008, dy: 0.0006, color: '#6c3fa3' },
+      { x: 0.7, y: 0.6, r: 0.4, dx: -0.0007, dy: 0.0009, color: '#1a6b8a' },
+      { x: 0.5, y: 0.1, r: 0.38, dx: 0.0005, dy: -0.0007, color: '#c47a2a' },
+      { x: 0.1, y: 0.8, r: 0.35, dx: 0.0009, dy: -0.0005, color: '#2a7a4a' },
+      { x: 0.9, y: 0.2, r: 0.3, dx: -0.0006, dy: 0.0008, color: '#8a2a6b' },
+    ];
+    function draw() {
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = '#0c0c0c';
+      ctx.fillRect(0, 0, w, h);
+      blobs.forEach(b => {
+        const grd = ctx.createRadialGradient(b.x * w, b.y * h, 0, b.x * w, b.y * h, b.r * Math.max(w, h));
+        grd.addColorStop(0, b.color + 'cc');
+        grd.addColorStop(1, b.color + '00');
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, w, h);
+        b.x += b.dx; b.y += b.dy;
+        if (b.x < 0 || b.x > 1) b.dx *= -1;
+        if (b.y < 0 || b.y > 1) b.dy *= -1;
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+    window.addEventListener('resize', resize);
+  }
+  // Init fluid canvas when personal projects page is shown
+  const origShowPage = showPage;
+  function showPage(page) {
+    origShowPage(page);
+    if (page === 'soon') setTimeout(initFluidCanvas, 50);
+  }
+</script><script>
+  function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    document.getElementById('nav-' + page).classList.add('active');
+    window.scrollTo(0, 0);
+    if (page === 'soon') setTimeout(initFluidCanvas, 50);
+  }
+  function showCampaign(index) {
+    document.getElementById('work-list-view').style.display = 'none';
+    document.getElementById('work-detail-view').style.display = 'block';
+    document.querySelectorAll('.camp-detail').forEach(d => d.classList.remove('active'));
+    document.getElementById('detail-' + index).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+  function hideCampaign() {
+    document.getElementById('work-list-view').style.display = 'block';
+    document.getElementById('work-detail-view').style.display = 'none';
+    window.scrollTo(0, 0);
+  }
+  function initFluidCanvas() {
+    const canvas = document.getElementById('fluidCanvas');
+    if (!canvas || canvas._init) return;
+    canvas._init = true;
+    const ctx = canvas.getContext('2d');
+    function resize() {
+      canvas.width = canvas.offsetWidth || 400;
+      canvas.height = canvas.offsetHeight || 220;
+    }
+    resize();
+    const blobs = [
+      { x: 0.2, y: 0.3, r: 0.45, dx: 0.0008, dy: 0.0006, color: '#6c3fa3' },
+      { x: 0.7, y: 0.6, r: 0.4,  dx: -0.0007, dy: 0.0009, color: '#1a6b8a' },
+      { x: 0.5, y: 0.1, r: 0.38, dx: 0.0005,  dy: -0.0007, color: '#c47a2a' },
+      { x: 0.1, y: 0.8, r: 0.35, dx: 0.0009,  dy: -0.0005, color: '#2a7a4a' },
+      { x: 0.9, y: 0.2, r: 0.3,  dx: -0.0006, dy: 0.0008,  color: '#8a2a6b' },
+    ];
+    function draw() {
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = '#0c0c0c';
+      ctx.fillRect(0, 0, w, h);
+      blobs.forEach(b => {
+        const grd = ctx.createRadialGradient(b.x*w, b.y*h, 0, b.x*w, b.y*h, b.r*Math.max(w,h));
+        grd.addColorStop(0, b.color + 'cc');
+        grd.addColorStop(1, b.color + '00');
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, w, h);
+        b.x += b.dx; b.y += b.dy;
+        if (b.x < 0 || b.x > 1) b.dx *= -1;
+        if (b.y < 0 || b.y > 1) b.dy *= -1;
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+    window.addEventListener('resize', resize);
+  }
+</script>
+</body>
+</html>
